@@ -1,0 +1,31 @@
+{
+  "rules": {
+    ".read": true,
+    "school": {
+      "$sid": {
+        "count": {
+          ".write": "newData.isNumber() && data.val() + 1 === newData.val()"
+        },
+        "students": {
+          "$id": {
+            ".write": "!data.exists() && newData.child('order').exists() && newData.child('order').isNumber() && newData.parent().parent().child('count').val() <= newData.child('order').val()"
+          }
+        }
+      }
+    },
+    "students": {
+      "$id": {
+        ".write": "!data.exists()"
+      },
+      ".indexOn": "phone"
+    },
+    "count": {
+      ".write": "newData.isNumber() && data.val() + 1 === newData.val()"
+    },
+    "confirm": {
+      "$id": {
+        ".write": "!data.exists() || !newData.hasChildren(['confirm']) || newData.child('confirm').val() === false"
+      }
+    }
+  }
+}
