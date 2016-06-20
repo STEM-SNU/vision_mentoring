@@ -74,7 +74,7 @@ function checkResponse() {
       } else {
         $("#qrcode img").attr('src', 'https://chart.googleapis.com' +
                                 '/chart?cht=qr&chs=400x400&chl=' +
-                                encodeURIComponent(qrdata));  
+                                encodeURIComponent(qrdata));
       }
       $("#register-info").show();
       $("#search").hide();
@@ -96,7 +96,7 @@ function upload(data) {
         email: data.email,
         guardian_name: data.guardian_name,
         phone: data.phone,
-        interests: data.interests, 
+        interests: data.interests,
         motivation: data.motivation,
         timestamp: data.timestamp
     }, function(err) {
@@ -154,7 +154,7 @@ function sendData() {
     }
     upload(studentData);
   });
-  
+
 }
 
 if (!String.prototype.trim) {

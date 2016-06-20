@@ -15,6 +15,9 @@ var count;
 $(document).ready(function () {
   $('select').material_select();
 
+  $('#finished').hide();
+  $('#register').hide();
+
   $('#school').autocomplete({
     minLength: 2,
     source: schools_source,
@@ -43,7 +46,15 @@ $(document).ready(function () {
     }
   });
   firebase.database().ref('/count').on('value', function (snapshot) {
-    $('#realtime_count').text('현재 ' + snapshot.val() + '명 접수')
+    if (snapshot.val() > 1600) {
+      $('#finished').show();
+      $('#register').hide();
+    } else {
+      $('#finished').hide();
+      $('#register').show();
+      $('#realtime_count').text('현재 ' + snapshot.val() + '명 접수');
+    }
+
   });
   $('#grade').change(function (event) {
     $('input', $('#grade').parent()).removeClass('invalid').css('color','rgba(0, 0, 0, 0.87)');
@@ -51,13 +62,13 @@ $(document).ready(function () {
   $('#phone').change(function (event) {
     $('#phone').next().attr('data-error', '잘못된 연락처 형식입니다. (010-XXXX-XXXX)');
   });
-  
+
   console.log("콘솔 열지 마세요....... Bug report to: kakao @stemsnu");
 });
 
 function validateData() {
   var form = $('#basic-info');
-  
+
   var validated = true;
 
   var name = $('#name').val();
@@ -102,7 +113,7 @@ function validateData() {
   phone = phone.replace(/[^0-9]/g,'');
   guardianPhone = guardianPhone.replace(/[^0-9]/g,'');
 
-  
+
 
   if (validated) {
     studentData = {
@@ -143,7 +154,7 @@ function upload(data) {
         email: data.email,
         guardian_name: data.guardian_name,
         phone: data.phone,
-        interests: data.interests, 
+        interests: data.interests,
         motivation: data.motivation,
         timestamp: data.timestamp,
         order: data.order
@@ -154,9 +165,11 @@ function upload(data) {
           '지속적인 문제 발생 시 카톡 @stemsnu 또는 홈페이지(honor.snu.ac.kr)의 자유게시판에 문의해주시기 바랍니다.');
       } else {
         firebase.database().ref('/school/' + data.school.id).update({count: school_data.count + 1});
-        firebase.database().ref('/count').once('value', function(snapshot) {
-          firebase.database().ref('/count').set(snapshot.val() + 1);
-        });
+        if (data.order <= 20) {
+          firebase.database().ref('/count').once('value', function(snapshot) {
+            firebase.database().ref('/count').set(snapshot.val() + 1);
+          });
+        }
         firebase.database().ref('/students').push(data, function(err) {
           if(err) {
             console.log(err);
@@ -166,18 +179,24 @@ function upload(data) {
             $('input').val('');
             $('textarea').val('');
             $('input:checked').prop('checked', false);
-            if(confirm('접수가 완료되었습니다!\n' +
-              '확인을 누르시면 접수 확인 페이지로 이동합니다.')) {
-              location.href = 'confirm.html?name=' + encodeURIComponent(data.name) +
-                                '&phone=' + encodeURIComponent(data.phone); 
+            if (data.order <= 20) {
+              if(confirm('접수가 완료되었습니다!\n' +
+                '확인을 누르시면 접수 확인 페이지로 이동합니다.')) {
+                location.href = 'confirm.html?name=' + encodeURIComponent(data.name) +
+                                  '&phone=' + encodeURIComponent(data.phone);
+              }
+            } else {
+              if(confirm('대기번호가 발급되었습니다.\n' +
+                '확인을 누르시면 대기번호 확인 페이지로 이동합니다.')) {
+                location.href = 'confirm.html?name=' + encodeURIComponent(data.name) +
+                                  '&phone=' + encodeURIComponent(data.phone);
+              }
             }
           }
         });
       }
     });
-
-    
-  });  
+  });
 }
 
 function sendData() {
@@ -214,7 +233,7 @@ function sendData() {
     }
     upload(studentData);
   });
-  
+
 }
 
 if (!String.prototype.trim) {

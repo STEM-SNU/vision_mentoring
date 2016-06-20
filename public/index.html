@@ -31,7 +31,10 @@
       </nav>
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row" id="finished">
+      <h1>접수가 마감되었습니다!</h1>
+      </div>
+      <div class="row" id="register">
         <div class="col s12">
           <img src="intro.png" style="width:100%">
           <h6 id="realtime_count" class="right"></h6>
@@ -67,7 +70,7 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
               <label data-error="학년을 선택해주세요.">학년</label>
             </div>
             <div class="input-field col s12 m6">
-              <input id="email" type="email" class="validate"> 
+              <input id="email" type="email" class="validate">
               <label for="email" data-error="잘못된 이메일 주소입니다." data-success="">E-mail</label>
               <span class="grey-text"><small>학생 본인이 자주 사용하는 이메일 주소를 입력해주세요.</small></span>
             </div>
@@ -184,6 +187,7 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
           </div>
           <a onclick="sendData()" class="right waves-effect waves-light btn">접수</a>
         </div>
+      </div>
     </div>
 
 
