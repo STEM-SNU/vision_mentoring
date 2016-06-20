@@ -15,9 +15,6 @@ var count;
 $(document).ready(function () {
   $('select').material_select();
 
-  $('#finished').hide();
-  $('#register').hide();
-
   $('#school').autocomplete({
     minLength: 2,
     source: schools_source,

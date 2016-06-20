@@ -63,15 +63,17 @@ function checkResponse() {
         $('#name').next().attr('data-error', '등록되지 않은 학생입니다.');
         return;
       }
-      $("#name-display").text(student.name);
       var schoolText = student.school.value;
       if (student.grade <= 3) schoolText += ', ' + student.grade + '학년';
       else schoolText += ' 졸업';
       var qrdata = 'https://honor.snu.ac.kr/vm_confirm?key=' + key;
       $("#school").text(schoolText);
       if (student.order > 20 && !student.confirmed) {
+        $("#name-display").html("대기번호: " + (student.order-20) + "<br>" + student.name);
         $("#qrcode img").attr('src', 'pending.png');
+        $("#title").hide();
       } else {
+        $("#name-display").text(student.name);
         $("#qrcode img").attr('src', 'https://chart.googleapis.com' +
                                 '/chart?cht=qr&chs=400x400&chl=' +
                                 encodeURIComponent(qrdata));
