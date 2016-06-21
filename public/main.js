@@ -24,22 +24,31 @@ $(document).ready(function () {
     },
     change: function (event, ui) {
       if(!ui.item) {
-        $(event.target).val('');
-        $(event.target).addClass('invalid');
-      }
-      else {
-        $(event.target).removeClass('invalid');
-        firebase.database().ref('/school/' + ui.item.id + '/count').once('value', function(snapshot) {
-          count = Number(snapshot.val()) + 1;
-          if (count > 20) {
-            $("#quota").html('<small>정원 초과!</small><br>' + count + '/20명');
-            $("#quota").addClass("red-text");
-          } else {
-            $("#quota").removeClass("red-text");
-            $("#quota").html('<br>' + count + '/20명');
+        var school_name = $(event.target).val().trim();
+        var i = 0;
+        for (i in schools_source) {
+          if (school_name === schools_source[i].value) {
+            school = ui.item = schools_source[i];
+            break;
           }
-        });
+        }
+        if (!ui.item) {
+          $(event.target).val('');
+          $(event.target).addClass('invalid');
+          return;
+        }
       }
+      $(event.target).removeClass('invalid');
+      firebase.database().ref('/school/' + ui.item.id + '/count').once('value', function(snapshot) {
+        count = Number(snapshot.val()) + 1;
+        if (count > 20) {
+          $("#quota").html('<small>정원 초과!</small><br>' + count + '/20명');
+          $("#quota").addClass("red-text");
+        } else {
+          $("#quota").removeClass("red-text");
+          $("#quota").html('<br>' + count + '/20명');
+        }
+      });
     }
   });
   firebase.database().ref('/count').on('value', function (snapshot) {
