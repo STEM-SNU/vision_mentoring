@@ -34,6 +34,9 @@
       <div class="row" id="finished" style="display:none;">
       <h1>접수가 마감되었습니다!</h1>
       </div>
+      <div class="row" id="notyet" style="display:none;">
+      <h1>접수가 마감되었습니다!</h1>
+      </div>
       <div class="row" id="register">
         <div class="col s12">
           <img src="intro.png" style="width:100%">
@@ -43,7 +46,7 @@
           <h4>1. 필수 항목 입력</h4>
           <h6>비전멘토링 지원자 접수를 위한 기본적인 내용을 작성하는 란입니다. 빼먹지 말고 알맞게 작성해주세요~!^^</h6>
           <h6>문의 사항은 카카오톡 <a href="
-http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이지(<a href='https://eng-stem.snu.ac.kr/'>https://eng-stem.snu.ac.kr/</a>)의 자유게시판에 글을 남겨주세요.</h6>
+http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이지(<a href='https://gongwoo.snu.ac.kr/'>https://gongwoo.snu.ac.kr/</a>)의 자유게시판에 글을 남겨주세요.</h6>
         </div>
         <form class="col s12" id="basic-info">
           <div class="row">
@@ -191,9 +194,10 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
     </div>
 
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
       // Initialize Firebase
