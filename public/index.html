@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta property="og:title" content="2016 여름 공우 비전멘토링 접수">
     <meta property="og:url" content="https://honor.snu.ac.kr/vm">
@@ -31,13 +32,16 @@
       </nav>
     </div>
     <div class="container">
+      <div class="row" id="loading">
+        <h1 style="text-align: center;"><i class='fa fa-spin fa-spinner'></i></h1>
+      </div>
       <div class="row" id="finished" style="display:none;">
-      <h1>접수가 마감되었습니다!</h1>
+        <h1>접수가 마감되었습니다!</h1>
       </div>
       <div class="row" id="notyet" style="display:none;">
-      <h1>접수가 마감되었습니다!</h1>
+        <h1>접수는 <span id="start-date"></span>부터 입니다!</h1>
       </div>
-      <div class="row" id="register">
+      <div class="row" id="register" style="display:none;">
         <div class="col s12">
           <img src="intro.png" style="width:100%">
           <h6 id="realtime_count" class="right"></h6>
@@ -58,7 +62,8 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
             <div class="input-field col s10 m5">
               <input id="school" type="text" class="validate">
               <label for="school" data-error="목록에서 학교 이름을 선택해주세요.">소속 학교</label>
-              <span class="grey-text"><small>정확한 학교 이름을 적어주세요</small></span>
+              <span class="grey-text"><small>정확한 학교 이름을 적어주세요. 학교가 검색되지 않을 경우, <a href="
+http://plus.kakao.com/home/kmo4udv1">@stemsnu</a>로 문의해주세요.</small></span>
             </div>
             <div class="col s2 m1" id="quota">
             </div>
@@ -197,6 +202,7 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ko.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
