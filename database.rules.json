@@ -3,6 +3,10 @@
     ".read": true,
     "school": {
       "$sid": {
+        ".write": "!data.exists()",
+        "name": {
+          ".write": false
+        },
         "count": {
           ".write": "newData.isNumber() && data.val() + 1 === newData.val()"
         },

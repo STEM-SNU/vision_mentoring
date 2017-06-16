@@ -42,41 +42,29 @@
       </nav>
     </div>
     <div class="container">
-      <div id="search" class="row">
-        <form class="col s12">
+      <div id="main" class="row">
+        <form class="col s12" id="basic-info">
           <div class="row">
             <div class="input-field col s12 m6">
               <input id="name" type="text" class="validate" pattern=".{2,}">
-              <label for="name" data-error="실명을 정확히 입력해주세요." data-success="">이름</label>
-              <span class="grey-text"><small>학생 본인의 실명을 입력해주세요</small></span>
+              <label for="name" data-error="학교명을 정확히 입력해주세요." data-success="">학교명</label>
+              <span class="grey-text"><small>학교의 공식 명칭을 입력해주세요.</small></span>
+            </div>
+
+            <div class="input-field col s12 m6">
+              <select id="province">
+                <option value="" selected disabled class="invalid">광역시/도</option>
+              </select>
+              <label data-error="광역시/도를 입력해주세요.">광역시/도</label>
             </div>
             <div class="input-field col s12 m6">
-              <input id="phone" type="text" pattern="0[0-9]{1,2}[\. -]?[0-9]{3,4}[\. -]?[0-9]{3,4}" class="validate">
-              <label for="phone" data-error="잘못된 연락처 형식입니다. (010-XXXX-XXXX)">학생 연락처</label>
-              <span class="grey-text"><small>참가 등록시 입력한 연락처(학생 or 부모님)를 입력해주세요.</small></span>
+              <select id="city">
+              </select>
+              <label data-error="시/구를 입력해주세요.">시/구</label>
             </div>
           </div>
         </form>
-        <a onclick="checkResponse()" class="right waves-effect waves-light btn">확인</a>
-      </div>
-      <div id="register-info" class="row center" style="display:none;width:400px;margin:auto;">
-        <div class="card">
-          <div class="card-content">
-            <img src="stem.png">
-            <h3 id="title" class="grey-text text-darken-4">접수증</h3>
-          </div>
-          <div class="card-image waves-effect waves-block waves-light">
-            <div id="qrcode">
-              <img class="activator">
-            </div>
-          </div>
-          <div class="card-content">
-            <span id="name-display" class="card-title grey-text text-darken-4"></span>
-            <p id="school" class="grey-text text-darken-2"></p>
-            <img src="gongwoo.png" style="width:300px;margin-top:30px;">
-            <p class="grey-text">2017년 여름 제 21회 비전멘토링</p>
-          </div>
-        </div>
+        <a onclick="sendData()" class="right waves-effect waves-light btn">추가</a>
       </div>
     </div>
 
@@ -94,8 +82,7 @@
       };
       firebase.initializeApp(config);
     </script>
-    <script src="school_list.js"></script>
-    <script src="confirm.js"></script>
+    <script src="school_add.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

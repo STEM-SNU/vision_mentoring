@@ -59,7 +59,6 @@ database.ref('/school').once('value', function (snapshot) {
 
 $(document).ready(function () {
   $('select').material_select();
-
   
   firebase.database().ref('/count').on('value', function (snapshot) {
     $('#loading').hide();
@@ -142,8 +141,6 @@ function validateData() {
   }
   phone = phone.replace(/[^0-9]/g,'');
   guardianPhone = guardianPhone.replace(/[^0-9]/g,'');
-
-
 
   if (validated) {
     studentData = {
