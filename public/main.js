@@ -247,6 +247,7 @@ function sendData() {
     studentData.timestamp = (new Date()).toISOString();
     studentData.interests = selected;
     studentData.motivation = $('#motivation').val();
+    studentData.question = $('#question').val();
     if (selected === '' || studentData.motivation.trim() === '') {
       if (!confirm('추가 설문을 작성하지 않으셨습니다!\n' +
         '관심 학과와 지원 동기를 작성하지 않고 그대로 제출하시겠습니까?')) {
