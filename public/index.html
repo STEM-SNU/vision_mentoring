@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta property="og:title" content="2016 여름 공우 비전멘토링 접수">
     <meta property="og:url" content="https://honor.snu.ac.kr/vm">
@@ -31,10 +32,16 @@
       </nav>
     </div>
     <div class="container">
-      <div class="row" id="finished" style="display:none;">
-      <h1>접수가 마감되었습니다!</h1>
+      <div class="row" id="loading">
+        <h1 style="text-align: center;"><i class='fa fa-spin fa-spinner'></i></h1>
       </div>
-      <div class="row" id="register">
+      <div class="row" id="finished" style="display:none;">
+        <h1>접수가 마감되었습니다!</h1>
+      </div>
+      <div class="row" id="notyet" style="display:none;">
+        <h1>접수는 <span id="start-date"></span>부터 입니다!</h1>
+      </div>
+      <div class="row" id="register" style="display:none;">
         <div class="col s12">
           <img src="intro.png" style="width:100%">
           <h6 id="realtime_count" class="right"></h6>
@@ -43,7 +50,7 @@
           <h4>1. 필수 항목 입력</h4>
           <h6>비전멘토링 지원자 접수를 위한 기본적인 내용을 작성하는 란입니다. 빼먹지 말고 알맞게 작성해주세요~!^^</h6>
           <h6>문의 사항은 카카오톡 <a href="
-http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이지(<a href='https://eng-stem.snu.ac.kr/'>https://eng-stem.snu.ac.kr/</a>)의 자유게시판에 글을 남겨주세요.</h6>
+http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이지(<a href='https://gongwoo.snu.ac.kr/'>https://gongwoo.snu.ac.kr/</a>)의 자유게시판에 글을 남겨주세요.</h6>
         </div>
         <form class="col s12" id="basic-info">
           <div class="row">
@@ -55,7 +62,8 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
             <div class="input-field col s10 m5">
               <input id="school" type="text" class="validate">
               <label for="school" data-error="목록에서 학교 이름을 선택해주세요.">소속 학교</label>
-              <span class="grey-text"><small>정확한 학교 이름을 적어주세요</small></span>
+              <span class="grey-text"><small>정확한 학교 이름을 적어주세요. 학교가 검색되지 않을 경우, <a href="
+http://plus.kakao.com/home/kmo4udv1">@stemsnu</a>로 문의해주세요.</small></span>
             </div>
             <div class="col s2 m1" id="quota">
             </div>
@@ -178,6 +186,11 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
                 <label for="motivation">비전멘토링에 지원한 동기</label>
                 <span class="grey-text"><small>비전멘토링에 지원한 동기를 써 주세요!</small></span>
               </div>
+              <div class="input-field col s12 m6">
+                <textarea id="question" class="materialize-textarea"></textarea>
+                <label for="question">멘토들에게 묻고 싶은 질문</label>
+                <span class="grey-text"><small>멘토들에게 묻고 싶은 질문(공부, 학과, 생활 등)을 자유롭게 적어주세요!</small></span>
+              </div>
             </div>
           </form>
           <div class="col s12">
@@ -191,9 +204,11 @@ http://plus.kakao.com/home/kmo4udv1">@stemsnu</a> 계정이나, 공우 홈페이
     </div>
 
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ko.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script>
       // Initialize Firebase

@@ -1,20 +1,24 @@
 var database = firebase.database();
 
-var schools_source = schools.map(function(x,i) {
-  return {
-    value: x[0],
-    id: i,
-    city: x[1]
-  };
-});
+var schools_source = [];
 
 var school = {};
 var studentData = {};
 var count;
 
-$(document).ready(function () {
-  $('select').material_select();
+var startdate;
 
+moment.locale('ko');
+
+database.ref('/school').once('value', function (snapshot) {
+  var list = snapshot.val();
+  schools_source = list.map(function(x) {
+    return {
+      value: x.name,
+      id: Number(x.id),
+      city: Number(x.city_id)
+    }
+  });
   $('#school').autocomplete({
     minLength: 2,
     source: schools_source,
@@ -51,17 +55,36 @@ $(document).ready(function () {
       });
     }
   });
+});
+
+$(document).ready(function () {
+  $('select').material_select();
+  
   firebase.database().ref('/count').on('value', function (snapshot) {
-    if (snapshot.val() > 1600) {
+    $('#loading').hide();
+    var count = snapshot.val();
+    $('#realtime_count').text('현재 ' + count + '명 접수');
+    if (count > 1600) {
       $('#finished').show();
+      $('#notyet').hide();
       $('#register').hide();
     } else {
-      $('#finished').hide();
-      $('#register').show();
-      $('#realtime_count').text('현재 ' + snapshot.val() + '명 접수');
+      firebase.database().ref('/startdate').on('value', function (snapshot) {
+        startdate = moment(snapshot.val());
+        $('#start-date').text(startdate.format('YYYY년 M월 D일, kk시 mm분'));
+        if (startdate.isAfter(moment())) {
+          $('#finished').hide();
+          $('#notyet').show();
+          $('#register').hide();
+        } else {
+          $('#finished').hide();
+          $('#notyet').hide();
+          $('#register').show();
+        }
+      });
     }
-
   });
+
   $('#grade').change(function (event) {
     $('input', $('#grade').parent()).removeClass('invalid').css('color','rgba(0, 0, 0, 0.87)');
   });
@@ -118,8 +141,6 @@ function validateData() {
   }
   phone = phone.replace(/[^0-9]/g,'');
   guardianPhone = guardianPhone.replace(/[^0-9]/g,'');
-
-
 
   if (validated) {
     studentData = {
@@ -226,6 +247,7 @@ function sendData() {
     studentData.timestamp = (new Date()).toISOString();
     studentData.interests = selected;
     studentData.motivation = $('#motivation').val();
+    studentData.question = $('#question').val();
     if (selected === '' || studentData.motivation.trim() === '') {
       if (!confirm('추가 설문을 작성하지 않으셨습니다!\n' +
         '관심 학과와 지원 동기를 작성하지 않고 그대로 제출하시겠습니까?')) {
